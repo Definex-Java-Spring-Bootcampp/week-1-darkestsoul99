@@ -4,6 +4,8 @@
  */
 package com.berkeko.online.shopping.model;
 
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.List;
 
 /**
@@ -13,14 +15,16 @@ import java.util.List;
 public class Customer {
     private String name;
     private String surname;
+    private LocalDate dateOfBirth;
     private String addressInfo;
     private String email; //bir email ile bir kere kayıt olunabilir.
     private String phoneNumber;
     private List<Order> orderList;
 
-    public Customer(String name, String surname, String addressInfo, String email, String phoneNumber) {
+    public Customer(String name, String surname, LocalDate dateOfBirth, String addressInfo, String email, String phoneNumber) {
         this.name = name;
         this.surname = surname;
+        this.dateOfBirth = dateOfBirth;
         this.addressInfo = addressInfo;
         this.email = email;
         this.phoneNumber = phoneNumber;
@@ -40,6 +44,14 @@ public class Customer {
 
     public void setSurname(String surname) {
         this.surname = surname;
+    }
+
+    public LocalDate getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(LocalDate dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
     }
 
     public String getAddressInfo() {
@@ -78,6 +90,19 @@ public class Customer {
         orderList.add(order);
     }
 
+    public int getAge() {
+        LocalDate currentDate = LocalDate.now();
+        Period period = Period.between(this.dateOfBirth, currentDate);
+        return period.getYears();
+    }
+
+    public long getTotalPurchaseAmount() {
+        return this.getOrderList().stream()
+                .flatMapToLong(order -> order.getProducts().stream()
+                        .mapToLong(product -> Math.round(product.getPrice())))
+                .sum();
+    }
+    
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
