@@ -6,7 +6,7 @@ public abstract class Loan implements Product {
 
     private BigDecimal amount;
     private Integer installment;
-    private Bank bank;
+    private String bank;
     private Double interestRate;
     // private Campaign campaign; // kampanyalı kredileri üstte çıkart
 
@@ -39,11 +39,11 @@ public abstract class Loan implements Product {
         this.installment = installment;
     }
 
-    public Bank getBank() {
+    public String getBank() {
         return bank;
     }
 
-    public void setBank(Bank bank) {
+    public void setBank(String bank) {
         this.bank = bank;
     }
 

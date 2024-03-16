@@ -4,8 +4,10 @@
  */
 package com.patika.kredinbizdenservice.model;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -13,14 +15,32 @@ import java.util.stream.Collectors;
  * @author berkeko
  */
 public class BankDatabase {
-    private final List<Bank> BankList;
+    private static BankDatabase instance = null;
+    private static List<Bank> BankList = new ArrayList<Bank>();
 
-    public BankDatabase(List<Bank> BankList) {
-        this.BankList = BankList;
+    public static BankDatabase getInstance() {
+        if (instance == null) {
+            instance = new BankDatabase();
+        }
+        return instance;
     }
-
+    
     public List<Bank> getBankList() {
         return BankList;
+    }
+    
+    public void addBank(Bank bank) {
+        if (!getBank(bank.getName()).isEmpty()) {
+            System.out.println("Bank is already exists! ");
+        } else {
+            BankList.add(bank);
+        }
+    }
+    
+    public Optional<Bank> getBank(String bankName) {
+        return BankList.stream()
+                .filter(bank -> bank.getName().equals(bankName))
+                .findFirst();
     }
     
     public List<CreditCard> getListCreditCardFromMostCampaignToLeast() {

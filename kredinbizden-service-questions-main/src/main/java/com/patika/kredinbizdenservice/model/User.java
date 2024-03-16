@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 
 public class User {
 
@@ -16,7 +17,7 @@ public class User {
     private Boolean isActive;
     private List<Application> applicationList;
 
-    public User(String name, String surname, LocalDate birthDate, String email, String password, String phoneNumber, String string2, boolean isActive) {
+    public User(String name, String surname, LocalDate birthDate, String email, String password, String phoneNumber, boolean isActive) {
         this.name = name;
         this.surname = surname;
         this.birthDate = birthDate;
@@ -24,15 +25,7 @@ public class User {
         this.password = hashPasswordSHA512(password);
         this.phoneNumber = phoneNumber;
         this.isActive = isActive;
-    }
-
-    public User(String name, String surname, String email, String password, String phoneNumber, Boolean isActive) {
-        this.name = name;
-        this.surname = surname;
-        this.email = email;
-        this.password = hashPasswordSHA512(password);
-        this.phoneNumber = phoneNumber;
-        this.isActive = isActive;
+        this.applicationList = new ArrayList<Application>();
     }
     
     public static String hashPasswordSHA512(String password) {
@@ -117,4 +110,15 @@ public class User {
     public void setApplicationList(List<Application> applicationList) {
         this.applicationList = applicationList;
     }
+    
+    public void addApplication(Application application) {
+        this.applicationList.add(application);
+    }
+
+    @Override
+    public String toString() {
+        return "User: " + name + " " + surname;
+    }
+    
+    
 }

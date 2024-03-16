@@ -29,6 +29,10 @@ public class Bank {
     public void setLoanList(List<Loan> loanList) {
         this.loanList = loanList;
     }
+    
+    public void addLoan(Loan loan) {
+        this.loanList.add(loan);
+    }
 
     public List<CreditCard> getCreditCards() {
         return creditCards;
@@ -36,6 +40,10 @@ public class Bank {
 
     public void setCreditCards(List<CreditCard> creditCards) {
         this.creditCards = creditCards;
+    }
+    
+    public void addCreditCard(CreditCard creditCard) {
+        this.creditCards.add(creditCard);
     }
     
     @Override

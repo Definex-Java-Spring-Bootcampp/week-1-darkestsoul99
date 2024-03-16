@@ -8,14 +8,18 @@ import java.util.stream.Collectors;
 import java.time.LocalDateTime;
 
 public class UserDatabase {
-    private final List<User> UserList;
-
-    public UserDatabase(List<User> UserList) {
-        this.UserList = new ArrayList<>(UserList);
+    private static UserDatabase instance = null;
+    private static List<User> UserList = new ArrayList<User>();
+    
+    public static UserDatabase getInstance() {
+        if (instance == null) {
+            instance = new UserDatabase();
+        }
+        return instance;
     }
 
     public void addUser(User user) {
-        if (getUser(user.getEmail()).isEmpty()) {
+        if (!getUser(user.getEmail()).isEmpty()) {
             System.out.println("Email is already used ! ");
         } else {
             UserList.add(user);
@@ -48,11 +52,11 @@ public class UserDatabase {
                             .sum()));
     }
 
-    public List<LocalDateTime> lastApplications() {
+    public List<LocalDateTime> lastApplications(int months) {
         return UserList.stream()
             .flatMap(user -> user.getApplicationList().stream())
             .map(Application::getLocalDateTime)
-            .filter(dateTime -> dateTime.isAfter(LocalDateTime.now().minusMonths(1)))
+            .filter(dateTime -> dateTime.isAfter(LocalDateTime.now().minusMonths(months)))
             .collect(Collectors.toList());
     }
     
