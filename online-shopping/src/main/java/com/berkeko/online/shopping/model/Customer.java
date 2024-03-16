@@ -6,6 +6,7 @@ package com.berkeko.online.shopping.model;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,6 +29,7 @@ public class Customer {
         this.addressInfo = addressInfo;
         this.email = email;
         this.phoneNumber = phoneNumber;
+        this.orderList = new ArrayList<>();
     }
 
     public String getName() {
@@ -106,13 +108,13 @@ public class Customer {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Customer{");
-        sb.append("name=").append(name);
-        sb.append(", surname=").append(surname);
-        sb.append(", addressInfo=").append(addressInfo);
-        sb.append(", email=").append(email);
-        sb.append(", phoneNumber=").append(phoneNumber);
-        sb.append('}');
+        sb.append("Customer: \n");
+        sb.append("\tName: ").append(name).append("\n");
+        sb.append("\tSurname: ").append(surname).append("\n");
+        sb.append("\tAddress: ").append(addressInfo).append("\n");
+        sb.append("\tEmail: ").append(email).append("\n");
+        sb.append("\tPhone Number: ").append(phoneNumber).append("\n");
         return sb.toString();
     }
+
 }

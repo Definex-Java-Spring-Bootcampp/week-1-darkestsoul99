@@ -4,21 +4,37 @@
  */
 package com.berkeko.online.shopping.model;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  *
  * @author berke
  */
 public class ProductDatabase {
+    private static ProductDatabase instance = null;
     private List<Product> productList;
 
-    public ProductDatabase(List<Product> productList) {
-        this.productList = productList;
+    public static ProductDatabase getInstance() {
+        if (instance == null) {
+            instance = new ProductDatabase();
+        }
+        return instance;
+    }
+    
+    public ProductDatabase() {
+        this.productList = new ArrayList<>();
     }
 
     public List<Product> getProductList() {
         return productList;
+    }
+    
+    public Optional<Product> getProduct(String productName) {
+        return productList.stream()
+                .filter(product -> product.getName().equals(productName))
+                .findFirst();
     }
 
     public void setProductList(List<Product> productList) {

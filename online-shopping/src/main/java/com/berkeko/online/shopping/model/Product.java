@@ -4,6 +4,8 @@
  */
 package com.berkeko.online.shopping.model;
 
+import com.berkeko.online.shopping.enums.Category;
+
 /**
  *
  * @author berkeko
@@ -11,11 +13,11 @@ package com.berkeko.online.shopping.model;
 public class Product {
     // Product has name, category, price and stock number
     private String name;
-    private String category;
+    private Category category;
     private double price;
     private int stock;
 
-    public Product(String name, String category, double price, int stock) {
+    public Product(String name, Category category, double price, int stock) {
         this.name = name;
         this.category = category;
         this.price = price;
@@ -30,11 +32,11 @@ public class Product {
         this.name = name;
     }
 
-    public String getCategory() {
+    public Category getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(Category category) {
         this.category = category;
     }
 
@@ -53,4 +55,17 @@ public class Product {
     public void setStock(int stock) {
         this.stock = stock;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("\n")
+          .append("name : ").append(name + "\n")
+          .append("category : ").append(category + "\n")
+          .append("price : ").append(price + "\n")
+          .append("stock : ").append(stock + "\n");
+        return sb.toString();
+    }
+    
+    
 }

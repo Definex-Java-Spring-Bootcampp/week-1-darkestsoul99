@@ -87,7 +87,9 @@ public class Invoice {
         sb.append("Date: ").append(date).append("\n");
         sb.append("Products:\n");
         for (Product product : products) {
-            sb.append(product).append("\n");
+            sb.append("----------------------------- \n");
+            sb.append(product.toString()).append("\n");
+            sb.append("----------------------------- \n");
         }
         return sb.toString();
     }

@@ -4,23 +4,38 @@
  */
 package com.berkeko.online.shopping.model;
 
-import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Comparator;
+import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 /**
  *
  * @author berke
  */
 public class CustomerDatabase {
+    private static CustomerDatabase instance = null;
     private List<Customer> customerList;
-
-    public CustomerDatabase(List<Customer> customerList) {
-        this.customerList = customerList;
+    
+    public static CustomerDatabase getInstance() {
+        if (instance == null) {
+            instance = new CustomerDatabase();
+        }
+        return instance;
+    }
+    
+    public CustomerDatabase() {
+        this.customerList = new ArrayList<>();
     }
 
     public List<Customer> getCustomerList() {
         return customerList;
+    }
+    
+    public Optional<Customer> getCustomer(String email) {
+        return customerList.stream()
+                .filter(customer -> customer.getEmail().equals(email))
+                .findFirst();
     }
 
     public void setCustomerList(List<Customer> customerList) {
@@ -36,12 +51,13 @@ public class CustomerDatabase {
                 .count();
     }
 
-    public List<Long> getProductCountForCustomer(String customerName) {
+    public int getProductCountForCustomer(String customerName) {
         return this.customerList.stream()
                 .filter(customer -> customer.getName().equals(customerName))
-                .mapToLong(customer -> customer.getOrderList().stream().count())
-                .boxed()
-                .collect(Collectors.toList());
+                .mapToInt(customer -> customer.getOrderList().stream()
+                        .mapToInt(order -> order.getProducts().size())
+                        .sum())
+                .sum();
     }
     
     public double getRangeOfCustomersTotalPrice(String customerName, int minAge, int maxAge) {
@@ -49,7 +65,7 @@ public class CustomerDatabase {
                 .filter(customer -> customer.getName().equals(customerName) &&
                                     customer.getAge() > minAge &&
                                     customer.getAge() < maxAge)
-                .mapToDouble(customer -> customer.getTotalPurchaseAmount())
+                .mapToDouble(Customer::getTotalPurchaseAmount)
                 .sum();
     }
     

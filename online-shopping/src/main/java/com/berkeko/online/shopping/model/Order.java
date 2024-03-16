@@ -5,6 +5,7 @@
 package com.berkeko.online.shopping.model;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -16,8 +17,9 @@ public class Order {
     private List<Product> products; // An order can have many products
     private Invoice invoice; // An order has an invoice
 
-    public Order(List<Product> products) {
-        this.products = products;
+    public Order(Customer customer, List<Product> products) {
+        this.customerInfo = customer;
+        this.products = new ArrayList<>(products);
         this.invoice = new Invoice(
                 customerInfo.getName(), 
                 customerInfo.getSurname(), 
